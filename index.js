@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-// Usamos JSON como middleware
+//JSON como middleware
 app.use(express.json());
 
 // Arreglo de memoria con 3 productos (id, nombre, precio)
@@ -12,12 +12,12 @@ const products = [
     { id: 3, nombre: 'Producto 3', precio: 300 }
 ];
 
-// GET /products - Devuelve la lista de productos
+// GET /products
 app.get('/products', (req, res) => {
     res.json(products);
 });
 
-// GET /products/:id - Devuelve un producto por ID
+// GET /products/:id
 app.get('/products/:id', (req, res) => {
     const productId = parseInt(req.params.id);
     const product = products.find(p => p.id === productId);
@@ -27,7 +27,7 @@ app.get('/products/:id', (req, res) => {
     res.json(product);
 });
 
-// POST /products - Agrega un nuevo producto
+// POST /products
 app.post('/products', (req, res) => {
     const { id, nombre, precio } = req.body;
 
@@ -36,7 +36,7 @@ app.post('/products', (req, res) => {
         return res.status(400).json({ error: 'Ya existe un producto con esa ID' });
     }
 
-    // Validar datos del producto
+    // Validar datos
     if (!id || !nombre || !precio) {
         return res.status(400).json({ error: 'Datos del producto incompletos (Id, nombre, precio)' });
     }
@@ -47,7 +47,6 @@ app.post('/products', (req, res) => {
     res.status(201).json(nuevoProducto);
 });
 
-// Iniciar el servidor
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
